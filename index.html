@@ -3,7 +3,12 @@
 <style>
 
 body {
-  background: #E0E0E0;
+  background-image: linear-gradient(to right top, #eeeeee, #e2e2e2, #d5d5d5, #c9c9c9, #bdbdbd);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px;
 }
 
 .axis path,
@@ -30,7 +35,7 @@ g.gridlines.axis--x path{
 }
 
 .gridlines line{
-  stroke: #424242;
+  stroke: #90A4AE;
   stroke-width: .8px;
   stroke-opacity: 0.4;
 }
@@ -55,7 +60,25 @@ g.axis.axis--x text.label{
 }
 
 </style>
-<svg width="800" height="400"></svg>
+<svg width="800" height="400">
+  <defs>
+    <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%" filterUnits="userSpaceOnUse">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/> <!-- stdDeviation is how much to blur -->
+      <feOffset dx="5" dy="5" result="offsetblur"/>
+      <feOffset dx="-5" dy="-5" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.5"/> <!-- slope is the opacity of the shadow -->
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+  </defs>
+</svg>
+
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 <script>
@@ -94,7 +117,7 @@ let centuryScale = d3.scaleSqrt()
 // categorical scale for team colors
 let colScale = d3.scaleOrdinal()
                   .domain(['Peshawar Zalmi', 'Islamabad United', 'Quetta Gladiators', 'Lahore Qalandars', 'Karachi Kings', 'Multan Sultans'])
-                  .range(['#FFFF00','#FF6F00', '#4A148C','#B71C1C', '#004D40', '#212121']);
+                  .range(['#FFEB3B','#EF6C00', '#512DA8','#B71C1C', '#9C27B0', '#43A047']);
 
 
 
@@ -192,6 +215,7 @@ function drawBeeswarm(data){
         .attr("cy", function(d) { return d.data.y; })
         //.style('fill', d => colScale(d.data.Team))
         .style("fill", 'grey')
+        .style('filter', 'url(#dropshadow)')
         .style("fill-opacity", 0.2)
         .style('stroke', 'black')
         .style("stroke-width", d => {
@@ -219,7 +243,7 @@ function drawBeeswarm(data){
         .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
 
     cell.append("title")
-        .text(function(d) { return d.data.Name + "\n" + d.data.Avg + "\n" + d.data.SR; });
+        .text(function(d) { console.log(d.data) }); //return d.data.Name + "\n" + d.data.Avg + "\n" + d.data.SR;
 }
 
 function preProcssData(data){
