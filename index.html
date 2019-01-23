@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="animate.css">
 <style>
 
 body {
@@ -58,6 +59,48 @@ g.axis.axis--x text.label{
   font-size: 12p  x;
   font-family: 'Inconsolata', monospace;
 }
+
+
+.tool {
+  position: absolute;
+  background: #e0e0e0;
+  color: #212121;
+  z-index: 1000;
+  border-radius: 10px;
+  width: 235px;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
+          box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
+}
+
+
+.colorToolBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 7px;
+}
+
+.playerInfo {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  padding: 1px 19px;
+}
+
+.playerName {
+  width: calc(100% - 50px);
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 
 </style>
 <svg width="800" height="400">
@@ -242,8 +285,50 @@ function drawBeeswarm(data){
     cell.append("path")
         .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
 
-    cell.append("title")
-        .text(function(d) { console.log(d.data) }); //return d.data.Name + "\n" + d.data.Avg + "\n" + d.data.SR;
+    cell.on('mouseover', function(d){
+      var player = d.data.Name;
+      var imgLink = d.data.photoLink;
+
+      console.log(imgLink);
+      d3.select('body').append('div')
+        .classed('animated', true)
+        .classed('fadeInOpac', true)
+        .classed('tool', true)
+        .attr('id', 'hoverbox')
+      // tooltip selection
+      var tooltip = d3.select('.tool');
+
+      tooltip.append('div')
+        .classed('colorToolBar', true)
+        .style('background-color', colScale(d.data.Team))
+
+      tooltip.append('div')
+        .classed('playerInfo', true)
+
+      var playerHead = d3.select('.playerInfo');
+
+      playerHead.append('div')
+        .classed('playerName', true)
+        .html(function(d) {
+          return '<p>' + player + '</p>'
+        })
+
+      playerHead.append('div')
+        .classed('playerAvatar', true)
+        .html(function(d) {
+          return '<img class="avatar" src="' + imgLink + '"></img>'
+        })
+
+      console.log(d.data)
+    });
+
+    cell.on('mouseout', function(d){
+      d3.selectAll('.tool').remove();
+    });
+
+
+  /*  cell.append("title")
+        .text(function(d) { console.log(d.data) }); return d.data.Name + "\n" + d.data.Avg + "\n" + d.data.SR; */
 }
 
 function preProcssData(data){
