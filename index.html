@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="animate.css">
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:200,300,400,500" rel="stylesheet">
+
 <style>
 
 body {
@@ -10,6 +12,7 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0px;
+  font-family: 'IBM Plex Sans', sans-serif;
 }
 
 .axis path,
@@ -63,7 +66,7 @@ g.axis.axis--x text.label{
 
 .tool {
   position: absolute;
-  background: #e0e0e0;
+  background-image: linear-gradient(to right top, #eeeeee, #e0e1e4, #d1d5da, #c1c9d0, #b0bec5);
   color: #212121;
   z-index: 1000;
   border-radius: 10px;
@@ -77,6 +80,8 @@ g.axis.axis--x text.label{
 
 .colorToolBar {
   position: absolute;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   top: 0;
   left: 0;
   width: 100%;
@@ -87,11 +92,19 @@ g.axis.axis--x text.label{
   display: flex;
   align-items: center;
   margin-top: 20px;
-  padding: 1px 19px;
+  margin: 1px 19px;
+  padding-top: 15px;
+  border-bottom: 1px solid #424242;
 }
 
 .playerName {
   width: calc(100% - 50px);
+}
+
+.playerRole {
+  font-size: 12px;
+  margin-top: 1px;
+  margin-bottom: 8px;
 }
 
 .avatar {
@@ -99,6 +112,48 @@ g.axis.axis--x text.label{
   height: 50px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.flexDistance {
+  display: flex;
+  justify-content: space-between;
+  padding: 1px 19px;
+}
+
+.noMargin {
+  margin-top: 1px;
+  margin-bottom: 5px;
+}
+
+.match {
+  margin-top: 4px;
+}
+
+.HC {
+  margin-bottom: 5px;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.value {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.banner_contain {
+  height: 35px;
+}
+
+.banner {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.bold {
+  font-weight: 500;
 }
 
 
@@ -287,9 +342,16 @@ function drawBeeswarm(data){
 
     cell.on('mouseover', function(d){
       var player = d.data.Name;
+      var role = d.data.TypeA;
       var imgLink = d.data.photoLink;
+      var playerAvg = d.data.Avg;
+      var playerSR = d.data.SR;
+      var matches = d.data.Matches;
+      var halfcenturies = d.data.HalfCenturies + (d.data.Centuries * 2);
 
-      console.log(imgLink);
+      var team = d.data.Team;
+
+      console.log(team);
       d3.select('body').append('div')
         .classed('animated', true)
         .classed('fadeInOpac', true)
@@ -310,7 +372,7 @@ function drawBeeswarm(data){
       playerHead.append('div')
         .classed('playerName', true)
         .html(function(d) {
-          return '<p>' + player + '</p>'
+          return '<p style="margin-bottom: 5px; margin-top: 1px;">' + player + '</p><p class="playerRole">Role: <span class="bold">' + role + '</span></p>'
         })
 
       playerHead.append('div')
@@ -318,6 +380,109 @@ function drawBeeswarm(data){
         .html(function(d) {
           return '<img class="avatar" src="' + imgLink + '"></img>'
         })
+
+      tooltip.append('div')
+        .classed('match', true)
+        .classed('flexDistance', true);
+
+      var avg = d3.select('.match');
+
+      avg.append('div')
+        .classed('title', true)
+        .html(function(d) {
+          return '<p class="noMargin">Matches Played:</p>'
+        })
+
+      avg.append('div')
+        .classed('value', true)
+        .html(function(d) {
+          return '<p class="noMargin">' + matches + '</p>'
+        })
+
+      tooltip.append('div')
+        .classed('average', true)
+        .classed('flexDistance', true);
+
+      var avg = d3.select('.average');
+
+      avg.append('div')
+        .classed('title', true)
+        .html(function(d) {
+          return '<p class="noMargin">Average:</p>'
+        })
+
+      avg.append('div')
+        .classed('value', true)
+        .html(function(d) {
+          return '<p class="noMargin">' + playerAvg + '</p>'
+        })
+
+      tooltip.append('div')
+        .classed('SR', true)
+        .classed('flexDistance', true);
+
+      var avg = d3.select('.SR');
+
+      avg.append('div')
+        .classed('title', true)
+        .html(function(d) {
+          return '<p class="noMargin">Strike Rate:</p>'
+        })
+
+      avg.append('div')
+        .classed('value', true)
+        .html(function(d) {
+          return '<p class="noMargin">' + playerSR + '</p>'
+        })
+
+      tooltip.append('div')
+        .classed('HC', true)
+        .classed('flexDistance', true);
+
+      var avg = d3.select('.HC');
+
+      avg.append('div')
+        .classed('title', true)
+        .html(function(d) {
+          return '<p class="noMargin">Half Centuries:</p>'
+        })
+
+      avg.append('div')
+        .classed('value', true)
+        .html(function(d) {
+          return '<p class="noMargin">' + halfcenturies + '</p>'
+        })
+
+      tooltip.append('div')
+        .classed('banner_contain', true)
+        .html(function(d) {
+          if (team === "Islamabad United") {
+            return '<img class="banner" src="./teamBanner/islamabad.png"></img>'
+          }
+          else if (team === "Karachi Kings") {
+            return '<img class="banner" src="./teamBanner/karachi.png"></img>'
+          }
+          else if (team === "Quetta Gladiators") {
+            return '<img class="banner" src="./teamBanner/quetta.png"></img>'
+          }
+          else if (team === "Lahore Qalandars") {
+            return '<img class="banner" src="./teamBanner/lahore.png"></img>'
+          }
+          else if (team === "Peshawar Zalmi") {
+            return '<img class="banner" src="./teamBanner/peshawar.png"></img>'
+          }
+          else if (team === "Multan Sultans") {
+            return '<img class="banner" src="./teamBanner/multan.png"></img>'
+          }
+        })
+
+        tooltip.style('top', d3.event.pageY - document.getElementById('hoverbox').getBoundingClientRect().height/2 + "px");
+        if (d3.event.pageX < window.innerWidth/2) {
+          tooltip.style('left', d3.event.pageX + 14 + "px");
+        }
+        else {
+          tooltip.style('left', d3.event.pageX - 260 + "px");
+        }
 
       console.log(d.data)
     });
