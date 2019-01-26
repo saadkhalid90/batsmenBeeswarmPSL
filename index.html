@@ -5,6 +5,12 @@
     <link rel="stylesheet" type="text/css" href="animate.css">
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:200,300,400,500" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -44,12 +50,20 @@
             <div class="controls_flex_responsive">
               <div class="input_container">
                 <h4>Team</h4>
+                <select id="team-selector">
+                  <option value="volvo">Volvo</option>
+                </select>
               </div>
               <div class="input_container">
                 <h4>Type</h4>
+                <div><input type="radio" name="type" value="All" checked="checked">All</div>
+                <div><input type="radio" name="type" value="Batsman">Batsmen</div>
+                <div><input type="radio" name="type" value="Allrounder">All-Rounder</div>
+                <div><input type="radio" name="type" value="Bowler">Bowler</div>
               </div>
               <div class="input_container">
                 <h4>Batting Average</h4>
+                <input type="text" id="batting" name="indicatorOne_range" value="" />
               </div>
             </div>
           </div>
