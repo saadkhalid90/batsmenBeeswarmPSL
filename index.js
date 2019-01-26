@@ -380,6 +380,8 @@
         }
       }={}){
 
+        d3.selectAll(selectionString).style('pointer-events', 'visible')
+
         var filterModule = FilterModule();
 
         var filterSeq = new filterModule.FilterSequence();
@@ -435,17 +437,18 @@
           /*svg.selectAll('.g-circles circle')
             .classed('c-filter-show', false);*/
 
-          selection = filterSeq.execute(d3.selectAll(selectionString));
+          var filterSelection = d3.selectAll(selectionString)
+          var selection = filterSeq.execute(filterSelection);
 
           //show all that were previosly filtered
           //console.log(selection);
 
           var filterIn = selection
-            //.style('display','unset')
             .filter(function(){
               return !this.classList.contains('c-filter-show');
             })
-            .style('display','unset');
+            .style('visibility','visible')
+            //.style('display','unset');
             //.call(filterInTransitionFunc)
 
           filterInTransitionFunc(filterIn)
@@ -454,18 +457,18 @@
             })*/
 
           //set not filtered class
-          svg.selectAll(selectionString)
+          filterSelection
             .classed('c-filter-show', false);
 
           selection.classed('c-filter-show', true);
 
           //remove all filtered
           var filterOut = svg.selectAll(selectionString + ':not(.c-filter-show)')
-            .classed('c-filter-show', false)
             //.call(filterOutTransitionFunc)
 
           filterOutTransitionFunc(filterOut)
             .on('end', function(){
+              this.style.visibility = 'hidden';
               //this.style.display = 'none';
             })
 
@@ -483,7 +486,7 @@
       }
 
       var filterCTRL = domFilterModule({
-        selectionString : 'svg g.cells g',
+        selectionString : 'svg g.cells>g',
         getDataObjFunc : function(d){
           return d.data;
         }
