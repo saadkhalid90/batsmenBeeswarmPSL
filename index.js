@@ -441,7 +441,7 @@
           //console.log(selection);
 
           var filterIn = selection
-            .style('display','unset')
+            //.style('display','unset')
             .filter(function(){
               return !this.classList.contains('c-filter-show');
             })
@@ -466,7 +466,7 @@
 
           filterOutTransitionFunc(filterOut)
             .on('end', function(){
-              this.style.display = 'none';
+              //this.style.display = 'none';
             })
 
           return selection;
