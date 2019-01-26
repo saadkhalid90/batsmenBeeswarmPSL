@@ -35,18 +35,6 @@
                         .domain(['Peshawar Zalmi', 'Islamabad United', 'Quetta Gladiators', 'Lahore Qalandars', 'Karachi Kings', 'Multan Sultans'])
                         .range(['#FFEB3B','#EF6C00', '#512DA8','#B71C1C', '#9C27B0', '#43A047']);
 
-
-
-      async function readAndDrawBeeswarm(){
-        let data = await d3.csv('PSL_Batting.csv')
-        // add ids and photo links
-        preProcssData(data);
-
-        drawBeeswarm(data);
-      }
-
-      readAndDrawBeeswarm();
-
       function drawBeeswarm(data){
           const g = svg.append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -318,5 +306,281 @@
         data.forEach(d => {
           d.photoLink = `photos/${d.Name}.jpg`
           d.id = d.Name.replace(/ /g, "");
+        })
+      }
+
+      function FilterModule(){
+        class Filter {
+          constructor(fn, name){
+            this._fn = fn;
+            this.name = name;
+          }
+
+          apply(selection){
+            return selection.filter(this._fn);
+          }
+        }
+
+        class FilterSequence{
+          constructor(){
+            this.filters = [];
+          }
+
+          add(filter){
+            var index = this.filters.findIndex((d)=>d.name === filter.name);
+
+            if(index > -1){
+              this.filters[index] = filter;
+            }else{
+              this.filters.push(filter);
+            }
+          }
+
+          remove(name){
+            var index = this.filters.findIndex((d)=>d.name === name);
+            if(index === -1){
+              return;
+            }
+            this.filters.splice(index,1);
+          }
+
+          execute(selection){
+            return this.filters.reduce(function(acc,d){
+              return d.apply(acc);
+            }, selection);
+          }
+
+          removeAll(){
+            this.filters = [];
+          }
+        }
+
+        return {
+          Filter : Filter,
+          FilterSequence : FilterSequence
+        };
+      }
+
+      function domFilterModule({
+        selectionString,
+        filterOutTransitionFunc = function(selection){
+          return selection.transition()
+            .duration(100)
+            .delay((d,i)=> i * 5 * Math.random())
+            .attr('r', 0)
+            .style('opacity', 0);
+        },
+        filterInTransitionFunc = function(selection){
+          return selection.transition()
+            .duration(100)
+            .delay((d,i)=> i * 2 * Math.random())
+            .attr('r', (d)=>d.originalRadius)
+            .style('opacity', 1);
+        },
+        getDataObjFunc = function(d){
+          return  d;
+        }
+      }={}){
+
+        var filterModule = FilterModule();
+
+        var filterSeq = new filterModule.FilterSequence();
+
+        testFS = filterSeq;
+
+        function addNumericFilter(min,max,ind){
+          var filterFunc = (d)=>{
+            var dataObj = getDataObjFunc(d);
+            var val = parseFloat(dataObj[ind]);
+            return val >= min && val <= max;
+          };
+
+          var filter = new filterModule.Filter(filterFunc, ind);
+          filterSeq.add(filter);
+        }
+
+        function addOrdinalFilter(matches,ind){
+          var filterFunc = (d)=>{
+            var dataObj = getDataObjFunc(d);
+            var val = dataObj[ind];
+            return matches[val];
+          };
+
+          var filter = new filterModule.Filter(filterFunc, ind);
+          filterSeq.add(filter);
+        }
+
+        function addCustomFilter(filterFunc,ind){
+          var filter = new filterModule.Filter(filterFunc, ind);
+          filterSeq.add(filter);
+        }
+
+        function removeFilter(name){
+          filterSeq.remove(name);
+        }
+
+        function removeAllFilters(){
+          filterSeq.removeAll();
+
+          /*svg.selectAll(selectionString)
+            .classed('c-filter-show', false)
+            .transition()
+            .duration(300)
+            .delay((d,i)=> i * 5 * Math.random())
+            .attr('r', (d)=>d.originalRadius)
+            .style('opacity', 1)*/
+        }
+
+        function executeFilter(){
+
+          //remove filter class
+          /*svg.selectAll('.g-circles circle')
+            .classed('c-filter-show', false);*/
+
+          selection = filterSeq.execute(d3.selectAll(selectionString));
+
+          //show all that were previosly filtered
+          //console.log(selection);
+
+          var filterIn = selection.filter(function(){
+              return !this.classList.contains('c-filter-show');
+            })
+            .style('display','unset');
+            //.call(filterInTransitionFunc)
+
+          filterInTransitionFunc(filterIn)
+            /*.on('end', function(){
+
+            })*/
+
+          //set not filtered class
+          svg.selectAll(selectionString)
+            .classed('c-filter-show', false);
+
+          selection.classed('c-filter-show', true);
+
+          //remove all filtered
+          var filterOut = svg.selectAll(selectionString + ':not(.c-filter-show)')
+            .classed('c-filter-show', false)
+            //.call(filterOutTransitionFunc)
+
+          filterOutTransitionFunc(filterOut)
+            .on('end', function(){
+              this.style.display = 'none';
+            })
+
+          return selection;
+        }
+
+        return {
+          addNumericFilter : addNumericFilter,
+          addOrdinalFilter : addOrdinalFilter,
+          addCustomFilter : addCustomFilter,
+          executeFilter : executeFilter,
+          removeAllFilters : removeAllFilters,
+          removeFilter : removeFilter
+        }
+      }
+
+      async function readAndDrawBeeswarm(){
+        let data = await d3.csv('PSL_Batting.csv')
+        tData = data;
+
+        // add ids and photo links
+        preProcssData(data);
+
+        drawBeeswarm(data);
+
+        initSelectize('#team-selector', getTeams(tData), function(e){
+          var val = e.target.value;
+          if(val === 'All'){
+            filterCTRL.removeFilter('Team');
+          }else{
+            var matches = {};
+            matches[val] = true;
+            filterCTRL.addOrdinalFilter(matches, 'Team');
+          }
+          filterCTRL.executeFilter();
+        });
+
+        initRadioButtons();
+      }
+
+      function getTeams(data){
+        var teams = {};
+
+        data.forEach(function(d){
+          teams[d.Team] = true;
+        });
+
+        return Object.keys(teams).map((d)=>{return {name : d, text : d, value : d}});
+      }
+
+      readAndDrawBeeswarm();
+
+      var filterCTRL = domFilterModule({
+        selectionString : 'svg g.cells g',
+        getDataObjFunc : function(d){
+          return d.data;
+        },
+        /*filterOutTransitionFunc : function(selection){
+          return selection.transition()
+            .duration(100)
+            .delay((d,i)=> i * 5 * Math.random())
+            .attr('r', 0)
+            .style('opacity', 0);
+        }*/
+      });
+
+      $("#batting").ionRangeSlider({
+        type: "double",
+        grid: true,
+        min: 0,
+        max: 50,
+        from: 0,
+        to: 50,
+        onChange : function(data){
+          filterCTRL.addNumericFilter(data.from, data.to, 'Avg');
+          filterCTRL.executeFilter();
+        }
+      });
+
+      function initSelectize(selector,options, cb){
+
+        var el = $(selector);
+
+        options.push({name : 'All', text : 'All', value : 'All'});
+        el.selectize({
+          sortField : 'text',
+          options : options
+        });
+
+        el[0].selectize.setValue('All', true);
+
+        el.on('change', function(e){
+
+          var selected = e.target.value;
+
+          if(!selected){
+            return;
+          }
+          cb(e);
+        });
+      }
+
+
+      function initRadioButtons(){
+        $('input[type="radio"][name="type"]').on('click', function(e){
+          var val = e.target.value;
+
+          if(val === 'All'){
+            filterCTRL.removeFilter('TypeA');
+          }else{
+            var matches = {};
+            matches[val] = true;
+            filterCTRL.addOrdinalFilter(matches, 'TypeA');
+          }
+
+          filterCTRL.executeFilter();
         })
       }
