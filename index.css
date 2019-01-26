@@ -67,6 +67,10 @@ footer {
   border-bottom: 20px solid;
 }
 
+.cells > g {
+  will-change: opacity;
+}
+
 .logo_PCB_container {
   display: flex;
   align-items: center;

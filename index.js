@@ -506,7 +506,6 @@
           from: 0,
           to: 50,
           onChange : function(data){
-            console.log(data)
             filterCTRL.addNumericFilter(data.from, data.to, 'Avg');
             filterCTRL.executeFilter();
           }
