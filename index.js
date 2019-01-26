@@ -157,7 +157,7 @@
 
             var team = d.data.Team;
 
-            console.log(team);
+            //console.log(team);
             d3.select('body').append('div')
               .classed('animated', true)
               .classed('fadeInOpac', true)
@@ -290,7 +290,7 @@
                 tooltip.style('left', d3.event.pageX - 260 + "px");
               }
 
-            console.log(d.data)
+            //console.log(d.data)
           });
 
           cell.on('mouseout', function(d){
