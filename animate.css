@@ -1345,6 +1345,7 @@
 .fadeInOpac {
   -webkit-animation-name: fadeInOpac;
   animation-name: fadeInOpac;
+  animation-duration: 0.5s;
 }
 
 
