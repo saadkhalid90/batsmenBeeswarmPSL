@@ -440,14 +440,16 @@
           var filterSelection = d3.selectAll(selectionString)
           var selection = filterSeq.execute(filterSelection);
 
+          console.log(selection.size(), 'abc')
+
           //show all that were previosly filtered
           //console.log(selection);
 
           var filterIn = selection
+            .style('visibility','visible')
             .filter(function(){
               return !this.classList.contains('c-filter-show');
             })
-            .style('visibility','visible')
             //.style('display','unset');
             //.call(filterInTransitionFunc)
 
