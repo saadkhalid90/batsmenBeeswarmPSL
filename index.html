@@ -1,65 +1,85 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<head>
+  <meta charset="utf-8">
+  <style>
 
-body {
-  background: #E0E0E0;
-}
+  body {
+    background: #E0E0E0;
+  }
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
 
-.axis text {
-  font: 10px sans-serif;
-}
+  .axis text {
+    font: 10px sans-serif;
+  }
 
-.cells path {
-  fill: none;
-  pointer-events: all;
-}
+  .cells path {
+    fill: none;
+    pointer-events: all;
+  }
 
-.cells :hover circle {
-  fill: red;
-}
-g.gridlines.axis--x path{
-  stroke: none;
-}
+  .cells :hover circle {
+    fill: red;
+  }
+  g.gridlines.axis--x path{
+    stroke: none;
+  }
 
-.gridlines line{
-  stroke: #424242;
-  stroke-width: .8px;
-  stroke-opacity: 0.4;
-}
+  .gridlines line{
+    stroke: #424242;
+    stroke-width: .8px;
+    stroke-opacity: 0.4;
+  }
 
-g.axis.axis--x path{
-  stroke: none;
-}
+  g.axis.axis--x path{
+    stroke: none;
+  }
 
-g.axis.axis--x line{
-  stroke: none;
-  stroke-width: 1px;
-}
+  g.axis.axis--x line{
+    stroke: none;
+    stroke-width: 1px;
+  }
 
-g.axis.axis--x g text{
-  font-size: 10px;
-  font-family: 'Inconsolata', monospace;
-}
+  g.axis.axis--x g text{
+    font-size: 10px;
+    font-family: 'Inconsolata', monospace;
+  }
 
-g.axis.axis--x text.label{
-  font-size: 12p  x;
-  font-family: 'Inconsolata', monospace;
-}
-
-</style>
-<svg width="800" height="400"></svg>
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-<script>
-
+  g.axis.axis--x text.label{
+    font-size: 12p  x;
+    font-family: 'Inconsolata', monospace;
+  }
+  </style>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" rel="stylesheet">
+</head>
+<body>
+  <div>
+  <input type="text" id="indOneMinMax" name="indicatorOne_range" value="" />
+  </div>
+  <div>
+    <select id="team-selector">
+      <option value="volvo">Volvo</option>
+    </select>
+  </div>
+  <div>
+    <div><input type="radio" name="type" value="All" checked="checked">All</div>
+    <div><input type="radio" name="type" value="Batsman">Batsmen</div>
+    <div><input type="radio" name="type" value="Allrounder">All-Rounder</div>
+    <div><input type="radio" name="type" value="Bowler">Bowler</div>
+  </div>
+  <svg width="1200" height="800"></svg>
+  <script>
 // define svg and dimensions of chart
 const svg = d3.select("svg"),
     margin = {top: 40, right: 40, bottom: 40, left: 40},
@@ -206,8 +226,11 @@ function drawBeeswarm(data){
     cell.append("path")
         .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
 
-    cell.append("title")
-        .text(function(d) { return d.data.Name + "\n" + d.data.Avg + "\n" + d.data.SR; });
+    console.log(cell);
+    tCell = cell;
+
+    /*cell.append("title")
+        .text(function(d) { return d.data.Name + "\n" + d.data.Avg + "\n" + d.data.SR; });*/
 }
 
 function preProcssData(data){
@@ -273,15 +296,15 @@ function domFilterModule({
   selectionString,
   filterOutTransitionFunc = function(selection){
     return selection.transition()
-      .duration(300)
+      .duration(100)
       .delay((d,i)=> i * 5 * Math.random())
       .attr('r', 0)
       .style('opacity', 0);
   },
   filterInTransitionFunc = function(selection){
     return selection.transition()
-      .duration(300)
-      .delay((d,i)=> i * 5 * Math.random())
+      .duration(100)
+      .delay((d,i)=> i * 2 * Math.random())
       .attr('r', (d)=>d.originalRadius)
       .style('opacity', 1);
   },
@@ -300,7 +323,6 @@ function domFilterModule({
     var filterFunc = (d)=>{
       var dataObj = getDataObjFunc(d);
       var val = parseFloat(dataObj[ind]);
-      console.log(val);
       return val >= min && val <= max;
     };
 
@@ -331,13 +353,13 @@ function domFilterModule({
   function removeAllFilters(){
     filterSeq.removeAll();
 
-    svg.selectAll(selectionString)
+    /*svg.selectAll(selectionString)
       .classed('c-filter-show', false)
       .transition()
       .duration(300)
       .delay((d,i)=> i * 5 * Math.random())
       .attr('r', (d)=>d.originalRadius)
-      .style('opacity', 1);
+      .style('opacity', 1)*/
   }
 
   function executeFilter(){
@@ -349,12 +371,18 @@ function domFilterModule({
     selection = filterSeq.execute(d3.selectAll(selectionString));
 
     //show all that were previosly filtered
-    console.log(selection);
+    //console.log(selection);
 
-    selection.filter(function(){
+    var filterIn = selection.filter(function(){
         return !this.classList.contains('c-filter-show');
       })
-      .call(filterInTransitionFunc)
+      .style('display','unset');
+      //.call(filterInTransitionFunc)
+
+    filterInTransitionFunc(filterIn)
+      /*.on('end', function(){
+        
+      })*/
 
     //set not filtered class
     svg.selectAll(selectionString)
@@ -363,9 +391,14 @@ function domFilterModule({
     selection.classed('c-filter-show', true);
 
     //remove all filtered
-    svg.selectAll(selectionString + ':not(.c-filter-show)')
+    var filterOut = svg.selectAll(selectionString + ':not(.c-filter-show)')
       .classed('c-filter-show', false)
-      .call(filterOutTransitionFunc)
+      //.call(filterOutTransitionFunc)
+
+    filterOutTransitionFunc(filterOut)
+      .on('end', function(){
+        this.style.display = 'none';
+      })
 
     return selection;
   }
@@ -382,10 +415,36 @@ function domFilterModule({
 
 async function readAndDrawBeeswarm(){
   let data = await d3.csv('PSL_Batting.csv')
+  tData = data;
+
   // add ids and photo links
   preProcssData(data);
 
   drawBeeswarm(data);
+
+  initSelectize('#team-selector', getTeams(tData), function(e){
+    var val = e.target.value;
+    if(val === 'All'){
+      filterCTRL.removeFilter('Team');
+    }else{
+      var matches = {};
+      matches[val] = true;
+      filterCTRL.addOrdinalFilter(matches, 'Team');
+    }
+    filterCTRL.executeFilter();
+  });
+
+  initRadioButtons();
+}
+
+function getTeams(data){
+  var teams = {};
+
+  data.forEach(function(d){
+    teams[d.Team] = true;
+  });
+
+  return Object.keys(teams).map((d)=>{return {name : d, text : d, value : d}});
 }
 
 readAndDrawBeeswarm();
@@ -395,14 +454,67 @@ var filterCTRL = domFilterModule({
   getDataObjFunc : function(d){
     return d.data;
   },
-  filterOutTransitionFunc : function(selection){
+  /*filterOutTransitionFunc : function(selection){
     return selection.transition()
-      .duration(600)
+      .duration(100)
       .delay((d,i)=> i * 5 * Math.random())
       .attr('r', 0)
       .style('opacity', 0);
+  }*/
+});
+
+$("#indOneMinMax").ionRangeSlider({
+  type: "double",
+  grid: true,
+  min: 0,
+  max: 50,
+  from: 0,
+  to: 50,
+  onChange : function(data){
+    filterCTRL.addNumericFilter(data.from, data.to, 'Avg');
+    filterCTRL.executeFilter();
   }
 });
 
+function initSelectize(selector,options, cb){
 
-</script>
+  var el = $(selector);
+
+  options.push({name : 'All', text : 'All', value : 'All'});
+  el.selectize({
+    sortField : 'text',
+    options : options
+  });
+
+  el[0].selectize.setValue('All', true);
+
+  el.on('change', function(e){
+
+    var selected = e.target.value;
+
+    if(!selected){
+      return;
+    }
+    cb(e);
+  });
+}
+
+
+function initRadioButtons(){
+  $('input[type="radio"][name="type"]').on('click', function(e){
+    var val = e.target.value;
+
+    if(val === 'All'){
+      filterCTRL.removeFilter('TypeA');
+    }else{
+      var matches = {};
+      matches[val] = true;
+      filterCTRL.addOrdinalFilter(matches, 'TypeA');
+    }
+
+    filterCTRL.executeFilter();
+  })
+}
+
+  </script>
+</body>
