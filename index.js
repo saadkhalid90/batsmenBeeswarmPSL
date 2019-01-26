@@ -23,7 +23,7 @@
           .range([0, width]);
       // radius mapped to strike rate
       let radScale = d3.scaleSqrt()
-                      .range([5, 15])
+                      .range([5, 25])
       // stroke colored to team and sized proportional to radius
       let strokeScale = d3.scaleSqrt()
                       .range([1, 4])
@@ -143,8 +143,8 @@
               .style("stroke-width", d => strokeScale(d.data.SR) + "px")
 
 
-          cell.append("path")
-              .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
+          /*cell.append("path")
+              .attr("d", function(d) { return "M" + d.join("L") + "Z"; });*/
 
           cell.on('mouseover', function(d){
             var player = d.data.Name;
@@ -367,14 +367,12 @@
           return selection.transition()
             .duration(100)
             .delay((d,i)=> i * 5 * Math.random())
-            .attr('r', 0)
             .style('opacity', 0);
         },
         filterInTransitionFunc = function(selection){
           return selection.transition()
             .duration(100)
             .delay((d,i)=> i * 2 * Math.random())
-            .attr('r', (d)=>d.originalRadius)
             .style('opacity', 1);
         },
         getDataObjFunc = function(d){
@@ -442,7 +440,9 @@
           //show all that were previosly filtered
           //console.log(selection);
 
-          var filterIn = selection.filter(function(){
+          var filterIn = selection
+            .style('display','unset')
+            .filter(function(){
               return !this.classList.contains('c-filter-show');
             })
             .style('display','unset');
@@ -482,6 +482,13 @@
         }
       }
 
+      var filterCTRL = domFilterModule({
+        selectionString : 'svg g.cells g',
+        getDataObjFunc : function(d){
+          return d.data;
+        }
+      });
+
       async function readAndDrawBeeswarm(){
         let data = await d3.csv('PSL_Batting.csv')
         tData = data;
@@ -490,6 +497,65 @@
         preProcssData(data);
 
         drawBeeswarm(data);
+
+        $("#batting").ionRangeSlider({
+          type: "double",
+          grid: true,
+          min: 0,
+          max: 50,
+          from: 0,
+          to: 50,
+          onChange : function(data){
+            console.log(data)
+            filterCTRL.addNumericFilter(data.from, data.to, 'Avg');
+            filterCTRL.executeFilter();
+          }
+        });
+
+        var maxSR = Math.ceil(d3.max(data, (d)=>parseFloat(d.SR)));
+
+        $("#strike_rate").ionRangeSlider({
+          type: "double",
+          grid: true,
+          min: 0,
+          max: maxSR,
+          from: 0,
+          to: maxSR,
+          onChange : function(data){
+            filterCTRL.addNumericFilter(data.from, data.to, 'SR');
+            filterCTRL.executeFilter();
+          }
+        });
+
+        var maxInnings = Math.ceil(d3.max(data, (d)=>parseFloat(d.Inns)));
+
+        $("#innings").ionRangeSlider({
+          type: "double",
+          grid: true,
+          min: 0,
+          max: maxInnings,
+          from: 0,
+          to: maxInnings,
+          onChange : function(data){
+            filterCTRL.addNumericFilter(data.from, data.to, 'Inns');
+            filterCTRL.executeFilter();
+          }
+        });
+
+        var maxHalfCenturies = Math.ceil(d3.max(data, (d)=>parseFloat(d.HalfCenturies)));
+
+        $("#half_centuries").ionRangeSlider({
+          type: "double",
+          grid: true,
+          min: 0,
+          max: maxHalfCenturies,
+          from: 0,
+          to: maxHalfCenturies,
+          onChange : function(data){
+            filterCTRL.addNumericFilter(data.from, data.to, 'HalfCenturies');
+            filterCTRL.executeFilter();
+          }
+        });
 
         initSelectize('#team-selector', getTeams(tData), function(e){
           var val = e.target.value;
@@ -518,18 +584,17 @@
 
       readAndDrawBeeswarm();
 
-      var filterCTRL = domFilterModule({
-        selectionString : 'svg g.cells g',
-        getDataObjFunc : function(d){
-          return d.data;
-        },
-        /*filterOutTransitionFunc : function(selection){
-          return selection.transition()
-            .duration(100)
-            .delay((d,i)=> i * 5 * Math.random())
-            .attr('r', 0)
-            .style('opacity', 0);
-        }*/
+      /*$("#batting").ionRangeSlider({
+        type: "double",
+        grid: true,
+        min: 0,
+        max: 50,
+        from: 0,
+        to: 50,
+        onChange : function(data){
+          filterCTRL.addNumericFilter(data.from, data.to, 'Avg');
+          filterCTRL.executeFilter();
+        }
       });
 
       $("#batting").ionRangeSlider({
@@ -543,7 +608,7 @@
           filterCTRL.addNumericFilter(data.from, data.to, 'Avg');
           filterCTRL.executeFilter();
         }
-      });
+      });*/
 
       function initSelectize(selector,options, cb){
 
