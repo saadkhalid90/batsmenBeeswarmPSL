@@ -119,7 +119,6 @@
               .attr("cy", function(d) { return d.data.y; })
               //.style('fill', d => colScale(d.data.Team))
               .style("fill", 'grey')
-              .style('filter', 'url(#dropshadow)')
               .style("fill-opacity", 0.2)
               .style('stroke', 'black')
               .style("stroke-width", d => {

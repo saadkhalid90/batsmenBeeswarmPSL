@@ -82,21 +82,6 @@
 
           <div class="vis_contain">
             <svg width="1000" height="600">
-              <defs>
-                <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%" filterUnits="userSpaceOnUse">
-                  <feGaussianBlur in="SourceAlpha" stdDeviation="3"/> <!-- stdDeviation is how much to blur -->
-                  <feOffset dx="5" dy="5" result="offsetblur"/>
-                  <feOffset dx="-5" dy="-5" result="offsetblur"/>
-                  <feComponentTransfer>
-                    <feFuncA type="linear" slope="0.5"/> <!-- slope is the opacity of the shadow -->
-                  </feComponentTransfer>
-                  <feMerge>
-                    <feMergeNode/>
-                    <feMergeNode in="SourceGraphic"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
             </svg>
           </div>
         </div>
