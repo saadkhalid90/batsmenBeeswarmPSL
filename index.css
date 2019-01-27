@@ -44,14 +44,44 @@ body {
 }
 .vis_container_main {
   display: flex;
+  flex-direction: column;
+}
+
+.input_container {
+  width: 200px;
+}
+
+.range_container {
+  width: 200px;
+}
+
+.controls_flex_responsive {
+  display: flex;
+  flex-direction: column;
+}
+
+.type_input {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 400px;
+}
+
+.range_indicators {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .vis_controls {
-  width: 18%;
+  width: 100%;
 }
 
 .vis_contain {
-  width: 82%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -223,4 +253,31 @@ g.axis.axis--x text.label{
 
 .bold {
   font-weight: 500;
+}
+
+@media screen and (max-width: 1000px) {
+  .content_container {
+    margin: 0px 65px;
+  }
+}
+
+
+@media screen and (max-width: 750px) {
+  .content_container {
+    margin: 0px 40px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .type_input {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .content_container {
+    margin: 0px 15px;
+  }
+  .pcb_information {
+    display: none;
+  }
 }

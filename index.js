@@ -439,7 +439,7 @@
           var filterSelection = d3.selectAll(selectionString)
           var selection = filterSeq.execute(filterSelection);
 
-          console.log(selection.size(), 'abc')
+    //      console.log(selection.size(), 'abc')
 
           //show all that were previosly filtered
           //console.log(selection);
