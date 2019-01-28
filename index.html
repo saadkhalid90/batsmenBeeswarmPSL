@@ -1,232 +1,114 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="animate.css">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:200,300,400,500" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" rel="stylesheet">
 
-body {
-  background: #E0E0E0;
-}
+  </head>
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
+  <body>
+    <div class="navbar">
+      <div class="content_container">
+        <div class="nav_flex_container">
+          <div class="pcb_information">
+            <p>Pakistan Cricket Board</p>
+          </div>
+          <p>Pakistan Super League 2019</p>
+        </div>
+      </div>
+    </div>
 
-.axis text {
-  font: 10px sans-serif;
-}
+    <div class="title_container">
+      <div class="content_container line_separate">
+        <h1 class="main_heading">Explore batting statistics of players in</h1>
+        <h1 class="main_heading pslText">Pakistan Super League</h1>
+      </div>
+    </div>
 
-.cells path {
-  fill: none;
-  pointer-events: all;
-}
+    <div class="about_vis">
+      <div class="content_container">
+        <div class="about_title">
+          <h3>Visualization Overview</h3>
+        </div>
+        <div class="about_detail">
+          <p>As the fourth season of Pakistan Super League approaches, this interactive visual allows fans to explore batting statistics of all players that have ever made a batting appearance in PSL. Each bubble, that represents a player has an outline colored according to team colors and is sized based on the player’s strike rate. A few bubbles are also enclosed by an outer circles in case the player has scored any half centuries.</p>
+          <p>The visual is also equipped with filters that allow the user to conduct analysis on the basis of team, batting average, strike rate, inning played and other statistics. Find out how your favorite players have performed in the PSL thus far.</p>
+        </div>
+      </div>
+    </div>
 
-.cells :hover circle {
-  fill: red;
-}
-g.gridlines.axis--x path{
-  stroke: none;
-}
+    <div class="grey_content">
+      <div class="content_container">
+        <div class="vis_container_main">
+          <div class="vis_controls">
+            <h3 class="input_title">Controls</h3>
+            <div class="controls_flex_responsive">
+              <div class="team_type">
+                <div class="input_container">
+                  <h4 class="input_title">Team</h4>
+                  <select id="team-selector">
+                    <option value="volvo">Volvo</option>
+                  </select>
+                </div>
+                <div class="input_container player_type_input">
+                  <h4 class="input_title">Type</h4>
+                  <div class="type_input">
+                    <div><input type="radio" name="type" value="All" checked="checked">All</div>
+                    <div><input type="radio" name="type" value="Batsman">Batsmen</div>
+                    <div><input type="radio" name="type" value="Allrounder">All-Rounder</div>
+                    <div><input type="radio" name="type" value="Bowler">Bowler</div>
+                  </div>
+                </div>
+              </div>
+              <div class="range_indicators">
+                <div class="input_container range_container">
+                  <h4 class="input_title">Batting Average</h4>
+                  <input type="text" id="batting" name="indicatorOne_range" value="" />
+                </div>
+                <div class="input_container range_container">
+                  <h4 class="input_title">Strike Rate</h4>
+                  <input type="text" id="strike_rate" name="indicatorOne_range" value="" />
+                </div>
+                <div class="input_container range_container">
+                  <h4 class="input_title">Innings Played</h4>
+                  <input type="text" id="innings" name="indicatorOne_range" value="" />
+                </div>
+                <div class="input_container range_container">
+                  <h4 class="input_title">Half centuries</h4>
+                  <input type="text" id="half_centuries" name="indicatorOne_range" value="" />
+                </div>
+              </div>
+            </div>
+          </div>
 
-.gridlines line{
-  stroke: #424242;
-  stroke-width: .8px;
-  stroke-opacity: 0.4;
-}
+          <div class="vis_contain">
+            <svg viewbox="0 0 1000 670" preserveAspectRatio="xMinYMin meet">
+              <g class="beeswarm" width="1000" height="670"></g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
 
-g.axis.axis--x path{
-  stroke: none;
-}
+    <footer>
+      <div class="content_container">
+        <div class="logo_PCB_container">
+          <img class="logo_PCB" src="./logo.jpg"></img>
+          <h3>Pakistan Super League 2019</h3>
+        </div>
+      </div>
+    </footer>
 
-g.axis.axis--x line{
-  stroke: none;
-  stroke-width: 1px;
-}
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <script src="/index.js"></script>
 
-g.axis.axis--x g text{
-  font-size: 10px;
-  font-family: 'Inconsolata', monospace;
-}
-
-g.axis.axis--x text.label{
-  font-size: 12p  x;
-  font-family: 'Inconsolata', monospace;
-}
-
-</style>
-<svg width="800" height="400"></svg>
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-<script>
-
-// define svg and dimensions of chart
-const svg = d3.select("svg"),
-    margin = {top: 40, right: 40, bottom: 40, left: 40},
-    SVGWidth = svg.attr("width"),
-    SVGHeight = svg.attr("height"),
-    width = SVGWidth - margin.left - margin.right,
-    height = SVGHeight - margin.top - margin.bottom;
-
-// function to get half century units from data
-// voronoi (logical) indicates if voronoi function has been applied to data
-function getHCUnits(d, voronoi) {
-  let centuries = voronoi ? d.data.Centuries : d.Centuries;
-  let halfCenturies = voronoi ? d.data.HalfCenturies : d.HalfCenturies;
-  return halfCenturies + 2 * (centuries);
-}
-
-
-// defining all relevant scales
-
-// batting average across x
-let x = d3.scaleLinear()
-    .range([0, width]);
-// radius mapped to strike rate
-let radScale = d3.scaleSqrt()
-                .range([5, 15])
-// stroke colored to team and sized proportional to radius
-let strokeScale = d3.scaleSqrt()
-                .range([1, 4])
-// an outline outside circle to denote half centuries
-let centuryScale = d3.scaleSqrt()
-                .range([0, 4])
-// categorical scale for team colors
-let colScale = d3.scaleOrdinal()
-                  .domain(['Peshawar Zalmi', 'Islamabad United', 'Quetta Gladiators', 'Lahore Qalandars', 'Karachi Kings', 'Multan Sultans'])
-                  .range(['#FFFF00','#FF6F00', '#4A148C','#B71C1C', '#004D40', '#212121']);
-
-
-
-async function readAndDrawBeeswarm(){
-  let data = await d3.csv('PSL_Batting.csv')
-  // add ids and photo links
-  preProcssData(data);
-
-  drawBeeswarm(data);
-}
-
-readAndDrawBeeswarm();
-
-function drawBeeswarm(data){
-    const g = svg.append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    const defs = svg.selectAll("defs")
-      .data(data)
-      .enter()
-      .append("defs")
-
-    defs.append("pattern")
-      .attr('id', d => d.id)
-      .attr('height', '100%')
-      .attr('width', '100%')
-      .attr("patternContentUnits", "objectBoundingBox")
-      .append("image")
-      .attr('height', 1)
-      .attr('width', 1)
-      .attr('preserveAspectRatio', 'none')
-      .attr("xlink:href", d => d.photoLink);
-
-    x.domain(d3.extent(data, function(d) { return +d.Avg; }));
-    radScale.domain(d3.extent(data, function(d) { return +d.SR; }));
-    strokeScale.domain(d3.extent(data, function(d) { return +d.SR; }));
-    centuryScale.domain(d3.extent(data, function(d) { return getHCUnits(d, false); }))
-
-    let simulation = d3.forceSimulation(data)
-        .force("x", d3.forceX(function(d) { return x(+d.Avg); }).strength(5))
-        .force("y", d3.forceY(height / 2))
-        .force("collision", d3.forceCollide().radius(d => radScale(d.SR) + strokeScale(d.SR) /*+ centuryScale(getHCUnits(d, false))*/))
-        .stop();
-
-    // complete force simulation to get to equilibrium
-    for (var i = 0; i < 500; ++i) simulation.tick();
-
-    g.append("g")
-        .attr("class", "axis axis--x")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x).tickValues(d3.range(0, 50, 5)))
-
-    g.select(".axis.axis--x")
-      .append('text')
-      .attr('class', 'label axis --x')
-      .text('Batting Average')
-      .style('text-anchor', 'start')
-      .style('fill', 'black')
-      .attr('transform', 'translate(0, 12)');
-
-
-
-    const xGridlines = d3.axisBottom()
-                        .scale(x)
-                        .tickSize(height)
-                        .tickFormat("")
-
-    g.append("g")
-      .attr("class", "gridlines axis--x")
-      .call(xGridlines);
-
-    d3.selectAll('g.axis.axis--x g text')
-      .attr('transform', 'translate(10, -18)')
-
-
-    data = data.filter(d => !isNaN(d.Avg))
-
-
-    let voronoi = d3.voronoi()
-                    .extent([[-margin.left,  -margin.top], [width + margin.right, height + margin.top]])
-                    .x(function(d) { return d.x; })
-                    .y(function(d) { return d.y; })
-
-    let cell = g.append("g")
-        .attr("class", "cells")
-        .selectAll("g")
-        .data(voronoi.polygons(data))
-        .enter()
-        .append("g");
-
-    cell.append("circle")
-        .attr('class', 'centuries')
-        .attr("r", d => radScale(d.data.SR) + (strokeScale(d.data.SR)/2) + centuryScale(getHCUnits(d, true)))
-        .attr("cx", function(d) { return d.data.x; })
-        .attr("cy", function(d) { return d.data.y; })
-        //.style('fill', d => colScale(d.data.Team))
-        .style("fill", 'grey')
-        .style("fill-opacity", 0.2)
-        .style('stroke', 'black')
-        .style("stroke-width", d => {
-          if (d.data.Centuries > 0 || d.data.HalfCenturies > 0){
-            return .5
-          }
-          else {
-            return 0
-          }
-        })
-        .style('stroke-opacity', 0.6)
-
-    cell.append("circle")
-        .attr('class', 'team-strikeRate')
-        .attr("r", d => radScale(d.data.SR))
-        .attr("cx", function(d) { return d.data.x; })
-        .attr("cy", function(d) { return d.data.y; })
-        //.style('fill', d => colScale(d.data.Team))
-        .style("fill", d => `url(#${d.data.id})`)
-        .style('stroke', d => colScale(d.data.Team))
-        .style("stroke-width", d => strokeScale(d.data.SR) + "px")
-
-
-    cell.append("path")
-        .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
-
-    cell.append("title")
-        .text(function(d) { return d.data.Name + "\n" + d.data.Avg + "\n" + d.data.SR; });
-}
-
-function preProcssData(data){
-  data.forEach(d => {
-    d.photoLink = `photos/${d.Name}.jpg`
-    d.id = d.Name.replace(/ /g, "");
-  })
-}
-
-</script>
+  </body>
+</html>
