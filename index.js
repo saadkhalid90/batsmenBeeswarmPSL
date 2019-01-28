@@ -1,6 +1,6 @@
 
       // define svg and dimensions of chart
-      const svg = d3.select("svg"),
+      const svg = d3.select(".beeswarm"),
           margin = {top: 40, right: 50, bottom: 120, left: 45},
           SVGWidth = svg.attr("width"),
           SVGHeight = svg.attr("height"),
@@ -284,9 +284,17 @@
               tooltip.style('top', d3.event.pageY - document.getElementById('hoverbox').getBoundingClientRect().height/2 + "px");
               if (d3.event.pageX < window.innerWidth/2) {
                 tooltip.style('left', d3.event.pageX + 14 + "px");
+                if (window.innerWidth - (d3.event.pageX + 274) < 0) {
+                  tooltip.style('left', d3.event.pageX - 130 + "px");
+                  tooltip.style('top', d3.event.pageY + 5 + "px");
+                }
               }
               else {
                 tooltip.style('left', d3.event.pageX - 260 + "px");
+                if (d3.event.pageX - 260 < 0) {
+                  tooltip.style('left', d3.event.pageX - 130 + "px");
+                  tooltip.style('top', d3.event.pageY + 5 + "px");
+                }
               }
 
             //console.log(d.data)

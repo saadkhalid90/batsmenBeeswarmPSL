@@ -12,6 +12,16 @@ body {
   margin: 0px 85px;
 }
 
+.main_heading {
+  font-size: 40px;
+  font-weight: 300;
+  margin: 0px 5px;
+}
+
+.pslText {
+  font-weight: 400;
+}
+
 .navbar {
   margin: 20px 0px;
 }
@@ -46,6 +56,7 @@ body {
   display: flex;
 }
 
+
 .vis_controls {
   width: 18%;
 }
@@ -65,6 +76,7 @@ body {
 
 footer {
   border-bottom: 20px solid;
+  border-color: #8c8c8c;
 }
 
 .cells > g {
@@ -92,7 +104,7 @@ footer {
 }
 
 .axis text {
-  font: 14px sans-serif;
+  font: 10px sans-serif;
 }
 
 .cells path {
@@ -123,15 +135,14 @@ g.axis.axis--x line{
 }
 
 g.axis.axis--x g text{
-  font-size: 16px;
+  font-size: 10px;
   font-family: 'Inconsolata', monospace;
 }
 
 g.axis.axis--x text.label{
-  font-size: 17px;
+  font-size: 12p  x;
   font-family: 'Inconsolata', monospace;
 }
-
 
 
 .tool {
@@ -224,4 +235,110 @@ g.axis.axis--x text.label{
 
 .bold {
   font-weight: 500;
+}
+
+#batting, #strike_rate, #innings, #half_centuries {
+  margin: 5px;
+}
+
+@media screen and (max-width: 1250px) {
+  .vis_container_main {
+    flex-direction: column;
+  }
+  .vis_contain {
+    width: 100%;
+  }
+
+  .vis_controls {
+    width: 100%;
+  }
+
+  .input_container {
+    width: 225px;
+  }
+
+  .range_container {
+    width: 250px;
+  }
+
+  .controls_flex_responsive {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .type_input {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 400px;
+  }
+
+  .team_type {
+    display: flex;
+  }
+
+  .player_type_input {
+    margin-left: 20px;
+  }
+
+  .range_indicators {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .content_container {
+    margin: 0px 65px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .content_container {
+    margin: 0px 55px;
+  }
+}
+
+
+@media screen and (max-width: 780px) {
+  .team_type {
+    flex-direction: column;
+  }
+  .player_type_input {
+    margin-left: 0px;
+    margin-top: 10px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .content_container {
+    margin: 0px 40px;
+  }
+  .main_heading {
+    font-size: 34px;
+  }
+}
+
+@media screen and (max-width: 668px) {
+  .main_heading {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .type_input {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .content_container {
+    margin: 0px 15px;
+  }
+  .pcb_information {
+    display: none;
+  }
+  .main_heading {
+    font-size: 24px;
+  }
 }
