@@ -1,7 +1,7 @@
 
       // define svg and dimensions of chart
       const svg = d3.select("svg"),
-          margin = {top: 40, right: 40, bottom: 40, left: 40},
+          margin = {top: 40, right: 50, bottom: 120, left: 45},
           SVGWidth = svg.attr("width"),
           SVGHeight = svg.attr("height"),
           width = SVGWidth - margin.left - margin.right,
@@ -23,13 +23,13 @@
           .range([0, width]);
       // radius mapped to strike rate
       let radScale = d3.scaleSqrt()
-                      .range([5, 25])
+                      .range([5, 26])
       // stroke colored to team and sized proportional to radius
       let strokeScale = d3.scaleSqrt()
                       .range([1, 4])
       // an outline outside circle to denote half centuries
       let centuryScale = d3.scaleSqrt()
-                      .range([0, 4])
+                      .range([0, 5])
       // categorical scale for team colors
       let colScale = d3.scaleOrdinal()
                         .domain(['Peshawar Zalmi', 'Islamabad United', 'Quetta Gladiators', 'Lahore Qalandars', 'Karachi Kings', 'Multan Sultans'])
@@ -80,7 +80,7 @@
             .text('Batting Average')
             .style('text-anchor', 'start')
             .style('fill', 'black')
-            .attr('transform', 'translate(0, 12)');
+            .attr('transform', 'translate(0, 24)');
 
 
 
@@ -123,7 +123,7 @@
               .style('stroke', 'black')
               .style("stroke-width", d => {
                 if (d.data.Centuries > 0 || d.data.HalfCenturies > 0){
-                  return .5
+                  return 1
                 }
                 else {
                   return 0
@@ -299,6 +299,51 @@
 
         /*  cell.append("title")
               .text(function(d) { console.log(d.data) }); return d.data.Name + "\n" + d.data.Avg + "\n" + d.data.SR; */
+
+          var circLegendG = d3.select('svg')
+            .append('g')
+            .attr('id', 'circLegendSRGroup')
+            .attr('transform', 'translate(50, 625)')
+            .call(drawCircSRLegend);
+
+          circLegendG.append('text')
+              .text('Strike Rate')
+              .style('text-anchor', 'middle')
+              .attr('transform', 'translate(60, 45)')
+
+
+
+          function drawCircSRLegend(selection) {
+            let cellSize = 60;
+            let data = [100, 120, 140]
+            let maxData = d3.max(data);
+            let groups = selection.selectAll('g')
+                    .data(data)
+                    .enter()
+                    .append('g')
+                    .attr('transform', (d,i) => `translate(${i*(cellSize)}, 0)`)
+
+            groups.append('circle')
+                  .attr('r', d => radScale(d))
+                  .style('fill', 'none')
+                  .style('stroke', 'black')
+                  .style('stroke-width', d => strokeScale(d));
+
+            groups.append('text')
+                  .text(d => `${d}`)
+                  .attr('transform', `translate(${0}, 5)`)
+                  .style('text-anchor', 'middle')
+                  .style('font-size', '12px');
+
+            function updateCellSize(value){
+              cellSize = value;
+            }
+
+            return {
+              updateCellSize : updateCellSize
+            }
+          }
+
       }
 
       function preProcssData(data){
