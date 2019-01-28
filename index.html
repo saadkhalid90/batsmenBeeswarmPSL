@@ -48,18 +48,22 @@
           <div class="vis_controls">
             <h3 class="input_title">Controls</h3>
             <div class="controls_flex_responsive">
-              <div class="input_container">
-                <h4 class="input_title">Team</h4>
-                <select id="team-selector">
-                  <option value="volvo">Volvo</option>
-                </select>
-              </div>
-              <div class="input_container type_input">
-                <h4 class="input_title">Type</h4>
-                <div><input type="radio" name="type" value="All" checked="checked">All</div>
-                <div><input type="radio" name="type" value="Batsman">Batsmen</div>
-                <div><input type="radio" name="type" value="Allrounder">All-Rounder</div>
-                <div><input type="radio" name="type" value="Bowler">Bowler</div>
+              <div class="team_type">
+                <div class="input_container">
+                  <h4 class="input_title">Team</h4>
+                  <select id="team-selector">
+                    <option value="volvo">Volvo</option>
+                  </select>
+                </div>
+                <div class="input_container player_type_input">
+                  <h4 class="input_title">Type</h4>
+                  <div class="type_input">
+                    <div><input type="radio" name="type" value="All" checked="checked">All</div>
+                    <div><input type="radio" name="type" value="Batsman">Batsmen</div>
+                    <div><input type="radio" name="type" value="Allrounder">All-Rounder</div>
+                    <div><input type="radio" name="type" value="Bowler">Bowler</div>
+                  </div>
+                </div>
               </div>
               <div class="range_indicators">
                 <div class="input_container range_container">
@@ -83,7 +87,8 @@
           </div>
 
           <div class="vis_contain">
-            <svg width="1150" height="750" viewbox="0 0 1150 750" preserveAspectRatio="xMinYMin meet">
+            <svg viewbox="0 0 1200 750" preserveAspectRatio="xMinYMin meet">
+              <g class="beeswarm" width="1150" height="700"></g>
             </svg>
           </div>
         </div>

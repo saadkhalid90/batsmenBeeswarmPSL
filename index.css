@@ -48,11 +48,11 @@ body {
 }
 
 .input_container {
-  width: 200px;
+  width: 225px;
 }
 
 .range_container {
-  width: 200px;
+  width: 250px;
 }
 
 .controls_flex_responsive {
@@ -67,6 +67,14 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   width: 400px;
+}
+
+.team_type {
+  display: flex;
+}
+
+.player_type_input {
+  margin-left: 20px;
 }
 
 .range_indicators {

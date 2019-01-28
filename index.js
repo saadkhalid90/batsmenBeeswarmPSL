@@ -1,6 +1,6 @@
 
       // define svg and dimensions of chart
-      const svg = d3.select("svg"),
+      const svg = d3.select(".beeswarm"),
           margin = {top: 40, right: 40, bottom: 40, left: 40},
           SVGWidth = svg.attr("width"),
           SVGHeight = svg.attr("height"),
