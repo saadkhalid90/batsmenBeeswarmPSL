@@ -284,10 +284,12 @@
               tooltip.style('top', d3.event.pageY - document.getElementById('hoverbox').getBoundingClientRect().height/2 + "px");
               if (d3.event.pageX < window.innerWidth/2) {
                 tooltip.style('left', d3.event.pageX + 14 + "px");
+                console.log(window.innerWidth - (d3.event.pageX + 14 + 235));
               }
               else {
                 tooltip.style('left', d3.event.pageX - 260 + "px");
               }
+
 
             //console.log(d.data)
           });
