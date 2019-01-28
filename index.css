@@ -106,7 +106,7 @@ footer {
 }
 
 .axis text {
-  font: 10px sans-serif;
+  font: 16px sans-serif;
 }
 
 .cells path {
@@ -137,12 +137,12 @@ g.axis.axis--x line{
 }
 
 g.axis.axis--x g text{
-  font-size: 10px;
+  font-size: 16px;
   font-family: 'Inconsolata', monospace;
 }
 
 g.axis.axis--x text.label{
-  font-size: 12p  x;
+  font-size: 16px;
   font-family: 'Inconsolata', monospace;
 }
 
