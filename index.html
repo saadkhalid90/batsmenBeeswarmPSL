@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
   </head>
 
@@ -60,10 +61,14 @@
                 <div class="input_container player_type_input">
                   <h4 class="input_title">Type</h4>
                   <div class="type_input">
-                    <div><input type="radio" name="type" value="All" checked="checked">All</div>
-                    <div><input type="radio" name="type" value="Batsman">Batsmen</div>
-                    <div><input type="radio" name="type" value="Allrounder">All-Rounder</div>
-                    <div><input type="radio" name="type" value="Bowler">Bowler</div>
+                    <div class="flex">
+                      <div><input type="radio" name="type" value="All" checked="checked">All</div>
+                      <div><input type="radio" name="type" value="Batsman">Batsmen</div>
+                    </div>
+                    <div class="flex">
+                      <div><input type="radio" name="type" value="Allrounder">All-Rounder</div>
+                      <div><input type="radio" name="type" value="Bowler">Bowler</div>
+                    </div>
                   </div>
                 </div>
               </div>

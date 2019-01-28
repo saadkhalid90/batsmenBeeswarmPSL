@@ -330,7 +330,7 @@ g.axis.axis--x text.label{
 
 @media screen and (max-width: 525px) {
   .type_input {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     width: 100%;
   }
@@ -342,5 +342,11 @@ g.axis.axis--x text.label{
   }
   .main_heading {
     font-size: 24px;
+  }
+  .range_container {
+    width: 150px;
+  }
+  .input_title {
+    font-size: 14px;
   }
 }
