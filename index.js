@@ -557,6 +557,7 @@
 
         $("#batting").ionRangeSlider({
           type: "double",
+          skin: "sharp",
           grid: true,
           min: 0,
           max: 50,
@@ -572,6 +573,7 @@
 
         $("#strike_rate").ionRangeSlider({
           type: "double",
+          skin: "sharp",
           grid: true,
           min: 0,
           max: maxSR,
@@ -587,6 +589,7 @@
 
         $("#innings").ionRangeSlider({
           type: "double",
+          skin: "sharp",
           grid: true,
           min: 0,
           max: maxInnings,
@@ -602,6 +605,7 @@
 
         $("#half_centuries").ionRangeSlider({
           type: "double",
+          skin: "sharp",
           grid: true,
           min: 0,
           max: maxHalfCenturies,
