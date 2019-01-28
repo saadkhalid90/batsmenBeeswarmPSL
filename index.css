@@ -1,0 +1,346 @@
+body {
+  margin: 0px;
+  /*
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;*/
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.content_container {
+  margin: 0px 85px;
+}
+
+.main_heading {
+  font-size: 40px;
+  font-weight: 300;
+  margin: 0px 5px;
+}
+
+.pslText {
+  font-weight: 400;
+  color: #5c5c5c;
+}
+
+.navbar {
+  margin: 20px 0px;
+}
+
+.nav_flex_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title_container {
+  margin-bottom: 50px;
+}
+
+.line_separate {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 3px solid;
+  border-color: #8c8c8c;
+}
+
+.about_detail {
+  margin-bottom: 40px;
+}
+
+.grey_content {
+  background-image: linear-gradient(to right top, #eeeeee, #e2e2e2, #d5d5d5, #c9c9c9, #bdbdbd);
+  padding: 50px 0px;
+  margin-bottom: 50px;
+}
+.vis_container_main {
+  display: flex;
+}
+
+
+.vis_controls {
+  width: 18%;
+}
+
+.vis_contain {
+  width: 82%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input_title {
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+footer {
+  border-bottom: 20px solid;
+  border-color: #8c8c8c;
+}
+
+.cells > g {
+  will-change: opacity;
+}
+
+.logo_PCB_container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.logo_PCB {
+  margin-right: 10px;
+  width: 80px;
+  height: 80px;
+}
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.cells path {
+  fill: none;
+  pointer-events: all;
+}
+
+.cells :hover circle {
+  fill: red;
+}
+g.gridlines.axis--x path{
+  stroke: none;
+}
+
+.gridlines line{
+  stroke: #90A4AE;
+  stroke-width: .8px;
+  stroke-opacity: 0.4;
+}
+
+g.axis.axis--x path{
+  stroke: none;
+}
+
+g.axis.axis--x line{
+  stroke: none;
+  stroke-width: 1px;
+}
+
+g.axis.axis--x g text{
+  font-size: 10px;
+  font-family: 'Inconsolata', monospace;
+}
+
+g.axis.axis--x text.label{
+  font-size: 12p  x;
+  font-family: 'Inconsolata', monospace;
+}
+
+
+.tool {
+  position: absolute;
+  background-image: linear-gradient(to right top, #eeeeee, #e0e1e4, #d1d5da, #c1c9d0, #b0bec5);
+  color: #212121;
+  z-index: 1000;
+  border-radius: 10px;
+  width: 235px;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
+          box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
+}
+
+
+.colorToolBar {
+  position: absolute;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 7px;
+}
+
+.playerInfo {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin: 1px 19px;
+  padding-top: 15px;
+  border-bottom: 1px solid #424242;
+}
+
+.playerName {
+  width: calc(100% - 50px);
+}
+
+.playerRole {
+  font-size: 12px;
+  margin-top: 1px;
+  margin-bottom: 8px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.flexDistance {
+  display: flex;
+  justify-content: space-between;
+  padding: 1px 19px;
+}
+
+.noMargin {
+  margin-top: 1px;
+  margin-bottom: 5px;
+}
+
+.match {
+  margin-top: 4px;
+}
+
+.HC {
+  margin-bottom: 5px;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.value {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.banner_contain {
+  height: 35px;
+}
+
+.banner {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+#batting, #strike_rate, #innings, #half_centuries {
+  margin: 5px;
+}
+
+@media screen and (max-width: 1250px) {
+  .vis_container_main {
+    flex-direction: column;
+  }
+  .vis_contain {
+    width: 100%;
+  }
+
+  .vis_controls {
+    width: 100%;
+  }
+
+  .input_container {
+    width: 225px;
+  }
+
+  .range_container {
+    width: 250px;
+  }
+
+  .controls_flex_responsive {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .type_input {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 400px;
+  }
+
+  .team_type {
+    display: flex;
+  }
+
+  .player_type_input {
+    margin-left: 20px;
+  }
+
+  .range_indicators {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .content_container {
+    margin: 0px 65px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .content_container {
+    margin: 0px 55px;
+  }
+}
+
+
+@media screen and (max-width: 780px) {
+  .team_type {
+    flex-direction: column;
+  }
+  .player_type_input {
+    margin-left: 0px;
+    margin-top: 10px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .content_container {
+    margin: 0px 40px;
+  }
+  .main_heading {
+    font-size: 34px;
+  }
+}
+
+@media screen and (max-width: 668px) {
+  .main_heading {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .type_input {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .content_container {
+    margin: 0px 15px;
+  }
+  .pcb_information {
+    display: none;
+  }
+  .main_heading {
+    font-size: 24px;
+  }
+}
