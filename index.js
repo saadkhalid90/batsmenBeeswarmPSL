@@ -629,6 +629,33 @@
           filterCTRL.executeFilter();
         });
 
+        initSelectize('#player-selector', getPlayers(tData), function(e){
+          var selectize = $(this)[0].selectize;
+          var val = selectize.items;
+          console.log(val);
+          if(val[val.length - 1] === 'All'){
+            selectize.clear(true);
+            selectize.addItem('All', true);
+            filterCTRL.removeFilter('Name');
+          }else{
+            var allIndex = val.indexOf('All');
+
+            if(allIndex > -1){
+              selectize.removeItem('All', true)
+            }
+
+            var matches = {};
+            val.forEach((v)=>{
+              matches[v] = true;
+            })
+            filterCTRL.addOrdinalFilter(matches, 'Name');
+          }
+          filterCTRL.executeFilter();
+        }, 
+        {
+          maxItems : 10
+        });
+
         initRadioButtons();
       }
 
@@ -640,6 +667,11 @@
         });
 
         return Object.keys(teams).map((d)=>{return {name : d, text : d, value : d}});
+      }
+
+      function getPlayers(data){
+        var players = data.map((d)=>d.Name);
+        return players.map((d)=>{ return {name : d, text : d, value : d}});
       }
 
       readAndDrawBeeswarm();
@@ -670,15 +702,16 @@
         }
       });*/
 
-      function initSelectize(selector,options, cb){
+      function initSelectize(selector,options, cb, selectizeOpts){
 
         var el = $(selector);
 
         options.push({name : 'All', text : 'All', value : 'All'});
-        el.selectize({
-          sortField : 'text',
-          options : options
-        });
+
+        selectizeOpts = selectizeOpts || {};
+        selectizeOpts.sortField = 'text';
+        selectizeOpts.options = options;
+        el.selectize(selectizeOpts);
 
         el[0].selectize.setValue('All', true);
 
@@ -689,7 +722,7 @@
           if(!selected){
             return;
           }
-          cb(e);
+          cb.apply(this,[e]);
         });
       }
 
