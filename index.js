@@ -183,7 +183,7 @@
             playerHead.append('div')
               .classed('playerAvatar', true)
               .html(function(d) {
-                return '<img class="avatar" src="' + imgLink + '"></img>'
+                return '<img class="avatar" style="border-color: ' + colScale(team) + '" src="' + imgLink + '"></img>'
               })
 
             tooltip.append('div')
@@ -259,25 +259,25 @@
               })
 
             tooltip.append('div')
-              .classed('banner_contain', true)
+              .classed('team_logo', true)
               .html(function(d) {
                 if (team === "Islamabad United") {
-                  return '<img class="banner" src="./teamBanner/islamabad.png"></img>'
+                  return '<img class="teamLogo" src="./teamLogos/Islamabad_United.png"></img>'
                 }
                 else if (team === "Karachi Kings") {
-                  return '<img class="banner" src="./teamBanner/karachi.png"></img>'
+                  return '<img class="teamLogo" src="./teamLogos/Karachi.png"></img>'
                 }
                 else if (team === "Quetta Gladiators") {
-                  return '<img class="banner" src="./teamBanner/quetta.png"></img>'
+                  return '<img class="teamLogo" style="width: 50%;" src="./teamLogos/Quetta_Gladiators.png"></img>'
                 }
                 else if (team === "Lahore Qalandars") {
-                  return '<img class="banner" src="./teamBanner/lahore.png"></img>'
+                  return '<img class="teamLogo" src="./teamLogos/logo.png"></img>'
                 }
                 else if (team === "Peshawar Zalmi") {
-                  return '<img class="banner" src="./teamBanner/peshawar.png"></img>'
+                  return '<img class="teamLogo" style="width: 50%;" src="./teamLogos/Peshawar_Zalmi.png"></img>'
                 }
                 else if (team === "Multan Sultans") {
-                  return '<img class="banner" src="./teamBanner/multan.png"></img>'
+                  return '<img class="teamLogo" src="./teamLogos/Picture3.png"></img>'
                 }
               })
 
@@ -651,7 +651,7 @@
             filterCTRL.addOrdinalFilter(matches, 'Name');
           }
           filterCTRL.executeFilter();
-        }, 
+        },
         {
           maxItems : 10
         });

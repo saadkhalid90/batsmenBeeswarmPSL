@@ -18,10 +18,10 @@
     <div class="navbar">
       <div class="content_container">
         <div class="nav_flex_container">
-          <div class="pcb_information">
-            <p>Pakistan Cricket Board</p>
+          <div class="plotree_logo">
+            <img class="logo" src="./logo.svg"></img>
           </div>
-          <p>Pakistan Super League 2019</p>
+          <p class="psl_information">Pakistan Super League 2019</p>
         </div>
       </div>
     </div>
@@ -110,12 +110,18 @@
 
     <footer>
       <div class="content_container">
-        <div class="logo_PCB_container">
-          <img class="logo_PCB" src="./logo.jpg"></img>
-          <h3>Pakistan Super League 2019</h3>
+        <div class="logo_PSL_container">
+          <img class="logo_PSL" src="./logo.jpg"></img>
+          <h4>Data Courtesy: Pakistan Super League</h4>
         </div>
       </div>
     </footer>
+
+    <script>
+      $(".logo").click(function() {
+        window.open('https://plotree.studio/', '_blank');
+      });
+    </script>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">

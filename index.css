@@ -45,6 +45,11 @@ body {
   border-color: #8c8c8c;
 }
 
+.logo {
+  width: 125px;
+  cursor: pointer;
+}
+
 .about_detail {
   margin-bottom: 40px;
 }
@@ -85,13 +90,13 @@ footer {
   will-change: opacity;
 }
 
-.logo_PCB_container {
+.logo_PSL_container {
   display: flex;
   align-items: center;
   margin-bottom: 50px;
 }
 
-.logo_PCB {
+.logo_PSL {
   margin-right: 10px;
   width: 80px;
   height: 80px;
@@ -191,10 +196,11 @@ g.axis.axis--x text.label{
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   object-fit: cover;
   border-radius: 50%;
+  border: 2px solid;
 }
 
 .flexDistance {
@@ -206,6 +212,21 @@ g.axis.axis--x text.label{
 .noMargin {
   margin-top: 1px;
   margin-bottom: 5px;
+}
+
+.team_logo {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.teamLogo {
+  width: 60%;
 }
 
 .match {
@@ -337,7 +358,7 @@ g.axis.axis--x text.label{
   .content_container {
     margin: 0px 15px;
   }
-  .pcb_information {
+  .psl_information {
     display: none;
   }
   .main_heading {
